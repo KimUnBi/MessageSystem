@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xml파일이 mybatis 설정 파일임을 알려주는 태그 -->
+<!-- xml파일은 존재 자체가 서로 다른 주체간에 데이터를 전달하고 저장되는 데이터의 구조를 기술하기 위한 언어 -->
+<!-- Extensible Markup Launguage -->
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+       <!-- dtd : document type definition :  -->
+       <!-- 스키마란? XML안에 들어있는 정보들의 집합 -->
+<!-- doctype 루트요소 dtd식별자(프로그램 외부에 존재하는 dtd파일을 위한 식별자) 선언 -->
+<!-- jdbc 연결과 관련한 transactionmanager 생성하기 : 트랜잭션 관리, 커넥션 풀링 환경 설정 -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/> 
+            <!-- type : JDBC(commit, rollback 기능을 이용하여 Mybatis자체에서 트랜잭션을 관리)
+                      : MANAGED(서버의 트랜잭션 관리 기능을 이용함, JavaEE 서버나 서블릿 컨테이너에서 트랜잭션 관리)
+              -->
+            <!-- DB 연결 설정 -->
+            <dataSource type="POOLED" > 
+            <!-- UNPOOLED(요청할때마다 커넥션 객체 생성), 
+                 POOLED(미리 객체 생성하고 요청 시 반환), 
+                 JNDI(JavaEE 서버, 서블릿 컨테이너에서 제공하는 데이터 소스 사용) -->
+                <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+                <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+                <property name="username" value="c##service"/>
+                <property name="password" value="12345"/>
+            </dataSource>
+        </environment>
+    </environments>
+    
+    <!-- 사용할 Mapper.xml(실행할 sql문 정의) 정의 -->
+    <!-- 여러개 나올 수 있기 때문에 mappers부터 -->
+    <mappers>
+		<mapper resource = "com/smhrd/database/MemberMapper.xml"/>    
+    </mappers>
+</configuration>

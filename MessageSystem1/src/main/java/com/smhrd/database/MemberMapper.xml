@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace : mapper 식별자(절대로 겹치면 안됨..!경로 못찾음) -->
+<!-- 인터페이스 바인딩을 가능하게 한다. 짧게 고유의 이름만으로도 가능하지만, 패키지 명까지 명확하게 작성하는 것이 좋음. -->
+<!-- 보통은 sql을 실행하는 클래스 경로 작성함 -->
+<mapper namespace="com.smhrd.model.DAO">
+
+	<insert id="insert">
+		insert into web_member values(#{email},#{pw},#{tel},#{address})
+	</insert>
+	
+	<select id="login" resultType="com.smhrd.model.MemberVO">		
+		select * from web_member where email = #{email} and pw = #{pw}
+	</select>
+	
+	<insert id="send">
+		insert into web_message values(msg_idx.nextval, #{send_name},#{receive_email},#{content},sysdate)
+	</insert>
+	
+	<select id="select" resultType="com.smhrd.model.MessageVO">
+		select * from web_message where receive_email = #{receive_email}
+	</select>
+	
+	<select id="check" resultType="java.lang.String">
+		select email from web_member where email = #{receive_email}
+	</select>
+	
+	<update id="update">
+		update web_member set pw = #{pw}, tel = #{tel}, address = #{address}
+		where email = #{email}
+	</update>
+	
+	<select id="selectAll" resultType="com.smhrd.model.MemberVO">
+		select * from web_member
+		where email != 'admin'
+	</select>
+	
+	
+	
+</mapper>
